@@ -1,22 +1,26 @@
 package com.kotlindemo
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Button
-import java.lang.reflect.Array
+import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 /**
  * val is used as final when you know its value is not gonna change
  * var is used as a variable when you need to change its value
  */
+// don't override inspect suggestion, keep the code as it is cuzz they are for understanding purpose.
 class MainActivity : AppCompatActivity() {
 
     var pCount = 0 //println count
+    lateinit var context: Context
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        context = this@MainActivity
 //        val name: String = "Anish"
 //        var age: Int = 23
 
@@ -24,16 +28,98 @@ class MainActivity : AppCompatActivity() {
         val name = "Anish"
         var age = 23
 
-        val btn = findViewById<Button>(R.id.btnId) as Button
-        btn.setOnClickListener(View.OnClickListener { view ->
+
+
+        btn1.setOnClickListener(View.OnClickListener { view ->
             valVarInfo(name, age)
             getIntInfo()
             showUnderStringCalculation()
             stringManipulation()
             showArrayDemo()
             arrayRangeDemo()
-
         })
+
+        btn2.setOnClickListener(View.OnClickListener { View ->
+            conditionalStatementDemo()
+        })
+
+        btn3.setOnClickListener(View.OnClickListener {
+            // Function and Function calling demo
+            showTankToast(context)
+            showToast(context, dummyFunctionOne(1, 2).toString())
+            showToast(context, dummyFunctionTwo(1, "I Am No"))
+            stringManipulation()
+        })
+    }
+
+    private fun heigherOrderFunctionDemo() {
+        // Use filter to find evens
+        val numList = 1..20
+
+        // If a function has only 1 parameter you don't
+        // have to declare, but just use it instead
+        val evenList = numList.filter { it % 2 == 0 }
+        evenList.forEach { n -> println(n) }
+
+//        startActivity<MainActivity>("id" to 3, "name" to "Hello toolbar")
+    }
+
+
+    private fun conditionalStatementDemo() {
+        val age = 23
+        // ----- CONDITIONALS -----
+        // Conditional Operators : >, <, >=, <=, ==, !=
+        // Logical Operators : &&, ||, !
+        ifDemo(age)
+        whenDemo(age)
+        forDemo()
+        whileDemo()
+    }
+
+    private fun whileDemo() {
+        val randNo = Random()
+        val magicNum = randNo.nextInt(50) + 1
+        var guessNo = 0
+        while (magicNum != guessNo) {
+            guessNo++
+        }
+        println("(${pCount++}) MagicNum = $magicNum and incremented guessed no= $guessNo")
+    }
+
+    private fun forDemo() {
+        arrayRangeDemo()// calling this method again as it contains the functionality of for
+    }
+
+    private fun whenDemo(age: Int) {
+        /**------------------- when condition -----------------------------**/
+        //when works like switch in kotlin (and many other language i suppose)
+
+        when (age) {
+            0, 1, 2, 3 -> {
+                println("(${pCount++}) Don't go anywhere")
+            }
+            in 4..18 -> {
+                println("(${pCount++}) Go to school")
+            }
+            in 18..23 -> {
+                println("(${pCount++}) Go to college")
+            }
+            else -> {
+                println("(${pCount++}) Go to job and end your life")
+            }
+        }
+    }
+
+    private fun ifDemo(age: Int) {
+        /**------------------- if condition -----------------------------**/
+
+        if (age < 3) {
+            println("(${pCount++}) Don't go anywhere")
+        } else if ((age > 5) && (age < 18)) {
+            println("(${pCount++}) Go to School")
+        } else {
+            println("(${pCount++}) just go to college and then die")
+        }
     }
 
     private fun arrayRangeDemo() {
@@ -62,20 +148,36 @@ class MainActivity : AppCompatActivity() {
         }
         println("_____________________________")
 
-        for(i in stepValues.reversed()){
+        for (i in stepValues.reversed()) {
             println("reversed step values: $i")
         }
+
+
+        var arrayOne = arrayOf(5, 2, 3)
+        for (i in arrayOne.indices) {
+            println("(${pCount++}) index of array: $i")
+        }
+        println("______________________________")
+        for (i in arrayOne) {
+            println("(${pCount++}) element of array: $i")
+        }
+
+        for ((index, value) in arrayOne.withIndex()) {
+            println("Index:   $index and  value:  $value")
+        }
+
+
     }
 
     private fun showArrayDemo() {
-        var myArray = arrayOf(1, 2.78, "Anish Vahora", true)
+        val myArray = arrayOf(1, 2.78, "Anish Vahora", true)
 
         println("(${pCount++}) myArray size = ${myArray.size}")
         println("(${pCount++}) array element at 2 position = ${myArray[2]}")
         println("(${pCount++}) if array contains 2.78 ${myArray.contains(2.78)}")
 
         val partArray = myArray.copyOfRange(0, 3)
-        println("------------------------------")
+        println("-------------------------------")
         for (any in partArray) {
             println("(${pCount++}) elements of partArray = $any")
         }
@@ -88,6 +190,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun stringManipulation() {
+        val a: Int = 2
+        val b = 5
+
+        val c = a.plus(5)
+        println("$a , $b, $c")
+        showToast(context, "plus:  $a , $b, $c")
         val rs = "Random String"
         println("(${pCount++}) At 2nd index of 'Random String'=  + ${rs.get(1)}")
         println("(${pCount++}) At 2nd index of 'Random String'=  + ${rs[1]}") //another better way to represent the same
@@ -132,5 +240,35 @@ class MainActivity : AppCompatActivity() {
         println("(${pCount++}) value B compareTo value A is ${b.compareTo(a)}")
         println("(${pCount++})  value A compareTo A is ${a.compareTo(d)}")
 
+    }
+
+    private fun dummyFunctionOne(no1: Int, no2: Int) = no1 + no2  //DataType are in Capital // it is returning a value too
+
+    // or you can write the same function as below
+    private fun dummyFunctionTwo(no1: Int, str: String): String {
+        var result = "" // variable must either have type annotation or must be initialised
+        //or var result: String
+        result = str + no1
+        return result
+
+//        or simply you can do in one line as below
+//        var result: String = "I am no. $no1"
+//        return result
+
+    }
+
+    private fun showTankToast(context: Context) {
+        Toast.makeText(context, "███۞███████ ]▄▄▄▄▄▄▄▄▄▄▄▄▃\n" +
+                "▂▄▅█████████▅▄▃▂\n" +
+                "I███████████████████].\n" +
+                "◥⊙▲⊙▲⊙▲⊙▲⊙▲⊙▲⊙◤...", Toast.LENGTH_LONG).show()
+        // ----- HIGHER ORDER FUNCTIONS -----
+        // Higher order functions either accepts or returns
+        // another function
+
+    }
+
+    private fun showToast(context: Context, msg: String) {
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
     }
 }
