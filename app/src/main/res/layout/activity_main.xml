@@ -37,4 +37,18 @@
         android:text="@string/don_t_forget_me"
         android:textAllCaps="false" />
 
+    <Button
+        android:id="@+id/btn4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/do_you_really_wanna_get_killed_or_what"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/don_t_be_racist_with_me_budd"
+        android:textAllCaps="false" />
+
 </LinearLayout>

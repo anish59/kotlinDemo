@@ -3,6 +3,7 @@ package com.kotlindemo
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -28,8 +29,10 @@ class MainActivity : AppCompatActivity() {
         val name = "Anish"
         var age = 23
 
+        initListener(name, age)
+    }
 
-
+    private fun initListener(name: String, age: Int) {
         btn1.setOnClickListener(View.OnClickListener { view ->
             valVarInfo(name, age)
             getIntInfo()
@@ -39,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             arrayRangeDemo()
         })
 
-        btn2.setOnClickListener(View.OnClickListener { View ->
+        btn2.setOnClickListener(View.OnClickListener { view ->
             conditionalStatementDemo()
         })
 
@@ -48,22 +51,101 @@ class MainActivity : AppCompatActivity() {
             showTankToast(context)
             showToast(context, dummyFunctionOne(1, 2).toString())
             showToast(context, dummyFunctionTwo(1, "I Am No"))
-            stringManipulation()
+            println(" (${pCount++}) add =  ${add(5, 4)}")
+            println(" (${pCount++}) subtract =  ${subtract()}") // instead of passing an argument i have assigned in called method itself
+            sayHello(" Hello Guys")
+            val (name, age) = showMoreReturns("Anish", 23)
+            println("((${pCount++}) name $name and age $age ")
+
+            val sum: Int = varArgsDemo(1, 2, 3, 4, 5)
+            println("(${pCount++}) sum of varArgs(1,2,3,4,5) : $sum")
+            println("(${pCount++}) multiply variable method= ${multiplyMethod(2, 3)}")
+            println("(${pCount++}) 5! = ${fact(5)}")
+
+        })
+
+        btn4.setOnClickListener(View.OnClickListener { view ->
+            reduceAndFoldDemo()
+            any_all_filter_demo()
+            mapDemo()//collection dataStructure i mean
+        })
+
+        btn5.setOnClickListener(View.OnClickListener { view ->
+            tryCatchExceptionDemo()
+            listManipulationDemo()
         })
     }
 
-    private fun heigherOrderFunctionDemo() {
+    private fun listManipulationDemo() {
+        var list1: MutableList<Int> = mutableListOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+        val list2: List<Int> = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+        list1.removeAt(2)
+        list1.add(4)// added at the end
+        list1.add(1, 15)
+
+        list1.forEach { n -> println("list1: $n") }
+
+        var list3 = list2.subList(0, 3)
+        list3.forEach { n -> println("list3: $n") }
+
+        var itemFirst = list3.first()
+        var itemLast = list3.last()
+
+        println("FirstItem: $itemFirst LastItem: $itemLast")
+    }
+
+    private fun tryCatchExceptionDemo() {
+
+        val divisor = 0
+        try {
+            if (divisor == 0) {
+                throw IllegalArgumentException(" Can't divide by Zero")
+            } else {
+                println("5/$divisor = ${5 / divisor}")
+            }
+        } catch (e: IllegalArgumentException) {
+            println("[${pCount++}] IllegalArgumentException:  ${e.message}")
+        }
+    }
+
+    private fun mapDemo() {
+        val numList = 1..10
+        val time7 = numList.map { it * 7 }
+        time7.forEach { n -> println("[${pCount++}] multiples of 7: $n") }
+    }
+
+    private fun any_all_filter_demo() {
+        val numlist = 1..20
+        println("[${pCount++}]Is there any Evens: ${numlist.any { it % 2 == 0 }}") // means return boolean if "any" no. from numList is even
+        println("[${pCount++}]does all are even: ${numlist.all { it % 2 == 0 }}")// means return boolean if "all" no. from numList is even
+
+        val allEvens = numlist.filter { it % 2 == 0 } //filtering out all the evens
+
+        for (num in allEvens) {
+            println("[${pCount++}]does all are even: ${num}")
+        }
+    }
+
+    private fun heigherOrderFunctionDemo() {//not understood
         // Use filter to find evens
         val numList = 1..20
 
         // If a function has only 1 parameter you don't
         // have to declare, but just use it instead
+
+//        val evenList = numList.filter { value -> value % 2 == 0 }
+//        value can be replaced with it keyword
+//        it: implicit name of a single parameter
+//        One other helpful convention is that if a function literal has only one parameter,
+//        its declaration may be omitted (along with the ->), and its name will be it
+
         val evenList = numList.filter { it % 2 == 0 }
         evenList.forEach { n -> println(n) }
 
+
 //        startActivity<MainActivity>("id" to 3, "name" to "Hello toolbar")
     }
-
 
     private fun conditionalStatementDemo() {
         val age = 23
@@ -85,6 +167,7 @@ class MainActivity : AppCompatActivity() {
         }
         println("(${pCount++}) MagicNum = $magicNum and incremented guessed no= $guessNo")
     }
+
 
     private fun forDemo() {
         arrayRangeDemo()// calling this method again as it contains the functionality of for
@@ -165,8 +248,6 @@ class MainActivity : AppCompatActivity() {
         for ((index, value) in arrayOne.withIndex()) {
             println("Index:   $index and  value:  $value")
         }
-
-
     }
 
     private fun showArrayDemo() {
@@ -222,7 +303,6 @@ class MainActivity : AppCompatActivity() {
         println("(${pCount++}) 3.14 to Int: " + 3.14.toInt())
 
     }
-
     private fun showUnderStringCalculation() {
         println("(${pCount++}) 1 + 2 is ${1 + 2}") //under string calculation
 
@@ -245,6 +325,7 @@ class MainActivity : AppCompatActivity() {
     private fun dummyFunctionOne(no1: Int, no2: Int) = no1 + no2  //DataType are in Capital // it is returning a value too
 
     // or you can write the same function as below
+
     private fun dummyFunctionTwo(no1: Int, str: String): String {
         var result = "" // variable must either have type annotation or must be initialised
         //or var result: String
@@ -270,5 +351,63 @@ class MainActivity : AppCompatActivity() {
 
     private fun showToast(context: Context, msg: String) {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
+    }
+
+    fun add(no1: Int, no2: Int): Int = no1 + no2
+
+    fun subtract(no1: Int = 6, no2: Int = 4) = no1 - no2// you can even assign the value in arguments too
+
+    fun sayHello(name: String): Unit = println(" (${pCount++}) Hello $name") //you can use unit if you return nothing
+    /*
+    //or you can write same as below
+    fun sayHello(name: String): Unit {
+        println("Hello $name")
+    }
+
+    //or in below manner just with out return type of method
+    fun sayHello(name: String): Unit {
+        println("Hello $name")
+    }
+    */
+
+
+    fun showMoreReturns(name: String, age: Int): Pair<String, Int> {
+        return Pair("Name: " + name, 5 + age)
+    }
+
+    private fun varArgsDemo(vararg nums: Int): Int {
+        var sum: Int = 0
+        if (nums.size != 0) {
+            nums.forEach { n -> sum = sum + n }
+        }
+        return sum
+    }
+
+    val multiplyMethod = { num1: Int, num2: Int -> num1 * num2 } // method as a variable (that what i say)
+
+    fun fact(x: Int): Int {
+        return factTail(x, 1)
+    }
+
+    tailrec fun factTail(y: Int, z: Int): Int { //i think tailrec word is necessary to optimising the recursive loop
+        if (y == 0) {
+            return z
+        } else {
+            return factTail(y - 1, y * z)
+        }
+    }
+
+    private fun reduceAndFoldDemo() {
+        val numList = 1..20
+        val listSum = numList.reduce { x, y ->
+            x + y
+        }
+        println("(${pCount++}) ListSum reduce= x + Y= $listSum")
+
+        val numList2 = 1..20
+        val listSum2 = numList2.fold(5) { x, y ->
+            x + y
+        }
+        println("(${pCount++}) ListSum2 Fold= x + Y= $listSum2")
     }
 }

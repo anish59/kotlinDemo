@@ -7,3 +7,11 @@ val intent = Intent(this@SplashActivity, DashboardActivity::class.java)
  startActivity<DashboardActivity>("id" to 3, "name" to "Hello toolbar")
     compile "org.jetbrains.anko:anko-commons:0.10.3"
     compile "org.jetbrains.anko:anko:$anko_version"
+
+
+
+
+    Doubt:
+    1. Lambda function practice
+    2.  "tailrec" exact use not sure so find its use
+    3. reduce and fold
