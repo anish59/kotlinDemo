@@ -129,8 +129,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun heigherOrderFunctionDemo() {//not understood
         // Use filter to find evens
-        val numList = 1..20
 
+        val numList = 1..20
         // If a function has only 1 parameter you don't
         // have to declare, but just use it instead
 
@@ -175,7 +175,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun whenDemo(age: Int) {
         /**------------------- when condition -----------------------------**/
-        //when works like switch in kotlin (and many other language i suppose)
+        //when works like switch in kotlin (and in many other language i suppose)
 
         when (age) {
             0, 1, 2, 3 -> {
@@ -278,9 +278,9 @@ class MainActivity : AppCompatActivity() {
         println("$a , $b, $c")
         showToast(context, "plus:  $a , $b, $c")
         val rs = "Random String"
-        println("(${pCount++}) At 2nd index of 'Random String'=  + ${rs.get(1)}")
-        println("(${pCount++}) At 2nd index of 'Random String'=  + ${rs[1]}") //another better way to represent the same
-        println("(${pCount++}) show string from index 3 to 7=  + ${rs.subSequence(3, 8)}")
+        println("(${pCount++}) At 2nd index of 'Random String'=   ${rs.get(1)}")
+        println("(${pCount++}) At 2nd index of 'Random String'=   ${rs[1]}") //another better way to represent the same
+        println("(${pCount++}) show string from index 3 to 7=  ${rs.subSequence(3, 8)}")
         println("(${pCount++}) doest it contains 'dom' : ${rs.contains("dom")}")
     }
 
@@ -357,7 +357,7 @@ class MainActivity : AppCompatActivity() {
 
     fun subtract(no1: Int = 6, no2: Int = 4) = no1 - no2// you can even assign the value in arguments too
 
-    fun sayHello(name: String): Unit = println(" (${pCount++}) Hello $name") //you can use unit if you return nothing
+    fun sayHello(name: String): Unit = println(" (${pCount++}) Hello $name") //you can use Unit if you return nothing
     /*
     //or you can write same as below
     fun sayHello(name: String): Unit {
@@ -383,7 +383,7 @@ class MainActivity : AppCompatActivity() {
         return sum
     }
 
-    val multiplyMethod = { num1: Int, num2: Int -> num1 * num2 } // method as a variable (that what i say)
+    val multiplyMethod = { num1: Int, num2: Int -> num1 * num2 } // method as a variable (thats what i say)
 
     fun fact(x: Int): Int {
         return factTail(x, 1)
