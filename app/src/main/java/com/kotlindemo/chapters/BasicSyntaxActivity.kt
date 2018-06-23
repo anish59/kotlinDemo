@@ -21,6 +21,36 @@ class BasicSyntaxActivity : AppCompatActivity() {
         definingVaridables()// it is not for output but jst for illustrating
         usingStringTemplate()
         usingConditionalOperators()
+        typeChecksAndAutoMaticCasting()
+
+    }
+
+    private fun typeChecksAndAutoMaticCasting() {
+        printLength(1000)
+        printLength("lololol")
+        printLength(listOf(Any()))
+
+    }
+
+    private fun printLength(obj: Any) {
+        Log.e("${counter++}", "$obj string length is ${getStringLength(obj)
+                ?: ",Oops error not a string"}")
+
+        //If the expression to the left of ?: is not null, the elvis operator returns it, otherwise it returns the expression to the right.
+        // Note that the right-hand side expression is evaluated only if the left-hand side is null.
+    }
+
+
+    private fun getStringLength(obj: Any): Int? {
+        //The is operator checks if an expression is an instance of a type.
+        // If an immutable local variable or property is checked for a specific type, there's no need to cast it explicitly:
+        if (obj is String) {
+            // `obj` is automatically cast to `String` in this branch
+            return obj.length
+        }
+
+        // `obj` is still of type `Any` outside of the type-checked branch
+        return null
 
     }
 
@@ -32,6 +62,8 @@ class BasicSyntaxActivity : AppCompatActivity() {
         Log.e("${counter++}", "maxOfType3:${maxOfType3(1, 2)}")
         Log.e("${counter++}", "maxOfType4:${maxOfType4(1, 2)}")
 
+
+        //Using nullable values and checking for null
         printProduct("a", "1")
         printProduct("a", "b")
         printProduct("2", "1")
