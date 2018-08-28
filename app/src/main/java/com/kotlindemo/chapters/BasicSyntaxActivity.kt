@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.kotlindemo.MainActivity
 import com.kotlindemo.R
+import kotlinx.android.synthetic.main.activity_basic_syntax_kotlin.*
 import java.util.logging.Logger
 
 class BasicSyntaxActivity : AppCompatActivity() {
@@ -16,12 +17,127 @@ class BasicSyntaxActivity : AppCompatActivity() {
         val log = Logger.getLogger(MainActivity::class.java.name)
         log.info("${counter++} :: Hello World")
         Log.e("${counter++}", "ddddd")
+        setListener()
+        showMe()
+    }
 
+    private fun setListener() {
+        btnCallAgain.setOnClickListener({
+            showMe()
+        })
+
+        btnInitDemo.setOnClickListener {
+//            InitOrderDemo("blah");
+        }
+    }
+
+    private fun showMe() {
         definingFunctions()
         definingVaridables()// it is not for output but jst for illustrating
         usingStringTemplate()
         usingConditionalOperators()
         typeChecksAndAutoMaticCasting()
+        usingForLoop()
+        usingWhileFun()
+        usingWhenExpression()
+        usingRanges()
+        usingCollection()
+    }
+
+    private fun usingCollection() {
+        val items = listOf("apple", "banana", "kiwifruit")
+        for (item in items) {
+            Log.e("", item)
+        }
+
+
+        val items2 = setOf("apple", "banana", "kiwifruit", "avocados")
+        when {
+            "orange" in items2 -> Log.e("${counter++}", "orange is juicy")
+            "apple" in items2 -> Log.e("${counter++}", "Apple is too fine")
+        }
+
+        items2.filter { it.startsWith("a") }
+                .sortedBy { it }
+                .map { it.toUpperCase() }
+                .forEach { Log.e("${counter++}", "$it") }
+    }
+
+    private fun usingRanges() {
+        inDemo()
+        Log.e("--", "----------------")
+        iteratingOverARange()
+        Log.e("--", "----------------")
+        iteratingOverAProgression()
+        Log.e("--", "----------------")
+
+    }
+
+    private fun iteratingOverAProgression() {
+        for (x in 1..10 step 2) {
+            Log.e("${counter++}", "$x")
+
+        }
+    }
+
+    private fun iteratingOverARange() {
+        for (x in 1..5) {
+            Log.e("${counter++}", "$x")
+        }
+    }
+
+    private fun inDemo() {
+        var fruits = listOf("Apple", "Banana", "Orange", "Kiwi")
+        if ("Banana" in fruits) {
+            Log.e("${counter++}", "Banana is in fruits list")
+        } else {
+            Log.e("${counter++}", "Banana is not in fruits list")
+        }
+        if ("banana" in fruits) {
+            Log.e("${counter++}", "banana is in fruits list")
+        } else {
+            Log.e("${counter++}", "banana is not in fruits list")
+        }
+    }
+
+    private fun usingWhenExpression() {
+        Log.e("${counter++}", describe(1))
+        Log.e("${counter++}", describe("Hello"))
+        Log.e("${counter++}", describe(1000L))
+        Log.e("${counter++}", describe(2))
+        Log.e("${counter++}", describe("Other"))
+    }
+
+    fun describe(obj: Any): String = when (obj) {
+        1 -> "$obj is one"
+        "Hello" -> "$obj is Greeting"
+        is Long -> "$obj is Long"
+        !is String -> "$obj is it is not String"
+        else -> "$obj is Unknown"
+    }
+
+    private fun usingWhileFun() {
+        val items = listOf("apple", "Banana", "Orange")
+        var index = 0
+        while (index < items.size) {
+            Log.e("${counter++}", "item at index $index is ${items[index]}")
+            index++
+        }
+    }
+
+    private fun usingForLoop() {
+        val items = listOf<String>("Apple", "Banana", "Orange")
+        Log.e("---", "---")
+
+        for (item in items) {
+            Log.e("${counter++}", "item = $item")
+        }
+
+        Log.e("---", "---")
+
+        for (index in items.indices) { // taking for loop of indices instead of items
+            Log.e("${counter}", "item at index $index is ${items[index]}")
+        }
 
     }
 
@@ -142,4 +258,5 @@ class BasicSyntaxActivity : AppCompatActivity() {
     private fun maxOfType3(a: Int, b: Int): Int = if (a > b) a else b
 
     private fun maxOfType4(a: Int, b: Int) = if (a > b) a else b // inferred type
+
 }
