@@ -22,14 +22,29 @@ class BasicSyntaxActivity : AppCompatActivity() {
     }
 
     private fun setListener() {
-        btnCallAgain.setOnClickListener({
+        btnCallAgain.setOnClickListener {
             showMe()
-        })
+        }
 
         btnInitDemo.setOnClickListener {
-//            InitOrderDemo("blah");
+            InitOrderDemo("Hello")
+        }
+        btnMethodDemo.setOnClickListener {
+            var cons1: ConstructorAndMethodDemo = ConstructorAndMethodDemo("Initializer")// initialize an object with a parameterized constructor
+            println("--------------------------------------")
+            cons1.iWontReturnAnything()
+            cons1.IwillReturnString().also(::println)// or println(cons1.IwillReturnString())
+
+            println("--------------------------------------")
+        }
+
+        btnInheritanceDemo.setOnClickListener {
+            val childObj = ChildClass() // no need to define dataType
+            childObj.methodDad()
+            childObj.methodDad2()
         }
     }
+
 
     private fun showMe() {
         definingFunctions()
